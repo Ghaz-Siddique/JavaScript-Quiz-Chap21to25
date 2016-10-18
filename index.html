@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScriptQuiz</title>
+    <style>
+        body {
+	background: radial-gradient(circle, #fff 20%, #ccc);
+    /*background-image: url(Green-Wallpaper-31.jpg);*/
+    
+    color: #000;
+}
+        div#test {
+            border: #000 1px solid;
+            padding: 10px 40px 40px 40px;
+        }
+    </style>
+    <script>
+        var pos = 0, test_status, question, choice, choices, chA, chB, chC, correct = 0;
+        var questions = [
+            [ "1. Select the character that are missing from this code.<br>var allLower \= user Input.toLowerCase\;", "( )", "< >", "[ ]", "A" ],
+            [ "2. Select the missing two characters in this code.<br>var allLower = userInput.tolowercase();", "LL", "TL", "LC", "C" ],
+            [ "3. Select the missing in this code.<br> var allLower = userInput toLowerCase();", ":", ".", ";", "B" ],
+            [ "4. What is the value of lowerVersion? Include the quotation marks in your answer.<br> var lowerVersion = \"No\!\".toLowerCase();", "no!", "\"No!\"", "\"no!\"", "C" ],
+            [ "5. Convert the string represented by upperString to lower-case and assign the result to lowerString, which hasn't been declared beforehand.;","var lowerString = upperString.toLowerCase();","var lowerString = upperstring.tolowerCase();","var lowerstring = upperString.toLowerCase();","A" ],
+            [ "6. Convert the string represented by x to lower-case and assign the result to the same variable.", "x = x.tolowerCase();", "x = x.ToLowerCase();", "x = x.toLowerCase();", "C" ],
+            [ "7. Convert the string represented by a variable to lower-case and assign the result to a second variable that hasn't been declared beforehand.", "var nameLower = name.LowerCase();", "var nameLower = name.toLowerCase();", "var nameLower = name.toLowerCase()", "B" ],
+            [ "8. What is the method for extracting a segment from a string?", "slice", "splice", "pop", "A" ],
+            [ "9.The number of characters in the string will be assigned to the variable. Fill in the blank.<br>var numChars = someWord._______ ;", "count", "indexOf", "length","C" ],
+            [ "10. Slice a segment starting with the 10th character and going all the way to the end, from the string represented by the variable x. Assign the segment to the variable y, which hasn't been declared beforehand.", "var y = x.slice(8);", "var y = x.slice(10);", "var y = x.slice(9);","C" ],
+            [ "11. What is the keyword for finding a character at a particular location in a string?", "charAt", "lastindexOf", "char", "A" ],
+            [ "12. What is the keyword for finding the index of the first character of a segment?", "lastindexOf", "indexof", "indexOf", "C" ],
+            [ "13. What is the keyword for finding the index of the first character of the last instance of a segment?", "lastindexOf", "indexof", "indexOf", "A" ],
+            [ "14. var text = \"To be or not to be.\"; <br>var index = text.indexOf(\"be\"); <br>What is the value of index?", "2", "3", "4", "B" ],
+            [ "15. Select the characters that are incorrect. <br>var char = sentence.charAt[10];", ";", "[]", "=", "B" ],
+            [ "16. In a first statement measure how many characters there are in a string represented by a variable. In a second statement slice all but the first and last characters of the string and assign it to a second variable that hasn't been declared beforehand.", "var numChars = cityToCheck.length;<br>var seg = cityToCheck.slice(1, numChars - 1);", "var numChars = cityToCheck.length;<br>var seg = cityToCheck.slice(1, numChars + 1);", "var numChars = cityToCheck.length<br>var seg = cityToCheck.slice(1, numChars - 1);", "A" ],
+            [ "17. After these two statements execute, what is the value of x? Include quotation marks.<br> var x = \"abc abc\"; <br>var y = x.replace(\"a\", \"z\");", "zbc abc", "zbc zbc", "abc zbc", "A" ],
+            [ "18. Code an alert that displays the index number of the first character of a segment represented by a variable that occurs within a string represented by a second variable.", "alert(paragraph.indexOf(segment);", "alert(paragraph.indexOf(segment));", "alert(paragraph.indexOf(segment))", "B"],
+            [ "19. Code the first line of an if statement that tests whether a segment with an index represented byindexNum exists in a string.", "if (indexNum !== 1) { ", "if (indexNum == -1) { ", "if (indexNum !== -1) { ", "C"],
+            [ "20. In the string represented by reply replace all instances of \"no\" with \"yes\" and assign the revised string to the same variable.", "reply = reply.replace(no, \"yes\");", "reply = reply.replace(/no/g, \"yes\");", "reply = reply.replace(/no/g, \"yes\")", ""]            
+        ];
+        function _(x) {
+            return document.getElementById(x);
+        }
+        function renderQuestion() {
+            test = _("test");
+            if(pos >= questions.length) {
+                test.innerHTML = "<h2>You got "+correct+" out of "+questions.length+" questions correct <br>Your Score is "+Math.round(correct/question.length*100)+"% </h2>";
+                //test.innerHTML = "<h2>Your Score is "+Math.round(correct/question.length*100)+"%</h2>";   
+                _("test_status").innerHTML = "Test Completed";
+                pos = 0;
+                correct = 0;
+                return  false;
+            }            
+            _("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
+            question = questions [pos][0];
+            chA = questions [pos][1];
+            chB = questions [pos][2];
+            chC = questions [pos][3];
+            test.innerHTML = "<h3>"+question+"</h3>";
+            test.innerHTML +="<input type='radio' name='choices' value='A'> "+chA+"<br><br>";
+            test.innerHTML +="<input type='radio' name='choices' value='B'> "+chB+"<br><br>";
+            test.innerHTML +="<input type='radio' name='choices' value='C'> "+chC+"<br><br>";
+            test.innerHTML += "<button onclick='checkAnswer()'>Next</button>";
+        }
+        function checkAnswer(){
+            choices = document.getElementsByName("choices");
+            for (var i=0; i<choices.length; i++){
+                if(choices[i].checked){
+                    choice = choices[i].value;
+                }
+            }
+            if(choice == questions[pos][4]){
+                correct++;
+            }
+            pos++;
+            renderQuestion();
+            // alert("Correct");
+        }
+        window.addEventListener("load", renderQuestion, false);
+    </script>
+</head>
+<body>
+    <h2 id ="test_status"></h2>
+    <div id="test"></div>
+</body>
+</html>
